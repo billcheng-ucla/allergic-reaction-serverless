@@ -1,6 +1,8 @@
 'use strict';
 const openTableAccessToken = process.env.OPEN_TABLE_ACCESS_TOKEN;
 const openTableHost = process.env.OPEN_TABLE_HOST;
+const targetLongitude = process.env.LONDON_LONGITUDE
+const targetLatitude = process.env.LONDON_LATITUDE
 
 //require('babel-register');
 const AWS = require('aws-sdk');
@@ -13,7 +15,7 @@ const body = DOM.body
 const div = DOM.div
 //const script = DOM.script,
 //const List = require('./List')
-const App = React.createFactory(require('./App'))
+const Card = React.createFactory(require('./restaurantCard'))
 
 
 module.exports.testServerRender = (event, context, callback) => {
@@ -25,14 +27,14 @@ module.exports.testServerRender = (event, context, callback) => {
             'Item <!--inject!-->\u2029',
         ]
     }
-    var html = ReactDOMServer.renderToStaticMarkup(body(null,
+    var html = ReactDOMServer.renderToStaticMarkup(
         div({
             id: 'content',
             dangerouslySetInnerHTML: {
-                __html: ReactDOMServer.renderToString(App(props))
+                __html: ReactDOMServer.renderToString(Card(props))
             }
         })
-    ))
+    )
 
     const slReponse = {
         statusCode: 200,
@@ -62,7 +64,9 @@ module.exports.hello = (event, context, callback) => {
 
 module.exports.availability = (event, context, callback) => {
 
-    const availabilityEndPoint = "/availability/334879?start_date_time=2017-03-29T18%3A00&party_size=2&forward_minutes=120&backward_minutes=30"
+  //https://platform.otqa.com/availability?latitude=42.360082&longitude=71.058880&party_size=2&radius=200&forward_minutes=180&backward_minutes=30&start_date_time=2017-03-13T20%3A00&include_unavailable=true
+
+    const availabilityEndPoint = "/availability?include_unavailable=true&latitude="+ targetLatitude +"&longitude="+ targetLongitude+"&radius=200&start_date_time=2017-03-29T18%3A00&party_size=2&forward_minutes=120&backward_minutes=30"
     const finalEndpoint = "https://" + openTableHost + availabilityEndPoint
 
     var options = {
@@ -78,17 +82,14 @@ module.exports.availability = (event, context, callback) => {
     request(options, function(error, response, body) {
         console.log('error:', error); // Print the error if one occurred
         console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-        console.log('body:', body); // Print the HTML for the Google homepage.
+        //console.log('body:', body); // Print the HTML for the Google homepage.
 
         const slReponse = {
             statusCode: 200,
             headers: {
                 'Access-Control-Allow-Origin': '*', // Required for CORS support to work
             },
-            body: JSON.stringify({
-                message: 'ot results!',
-                data: body // eslint-disable-line
-            }),
+            body: body
         };
 
         callback(null, slReponse);
