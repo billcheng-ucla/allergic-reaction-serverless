@@ -32,7 +32,7 @@ module.exports = React.createClass({
   // Note that we allow the button to be disabled initially, and then enable it
   // when everything has loaded
   render: function() {
-    return div(null, this.props.items[0].rid + " " + this.props.items[0].name);
+    return div(null, this.props.rid + " " + this.props.name);
 
   },
 })

@@ -20,30 +20,36 @@ const Card = React.createFactory(require('./restaurantCard'))
 
 
 module.exports.testServerRender = (event, context, callback) => {
-    var props = {
-        items: [
-            {rid: 44,  name: "thirsty"}
-        ]
-    }
-
-    var html = ReactDOMServer.renderToStaticMarkup(
-        div({
-            id: 'content',
-            dangerouslySetInnerHTML: {
-                __html: ReactDOMServer.renderToString(Card(props))
-            }
-        })
-    )
-
-    const slReponse = {
-        statusCode: 200,
-        headers: {
-            'Access-Control-Allow-Origin': '*', // Required for CORS support to work
-        },
-        body : html
+    let divs = '';
+    const params = {
+        TableName: 'restaurants'
     };
+    dynamo.scan(params, (err, data) => {
+        if (err) return callback(err);
 
-    callback(null, slReponse);
+        data.Items.forEach((item) => {
+            divs += ReactDOMServer.renderToString(Card(item))
+        });
+
+        var html = ReactDOMServer.renderToStaticMarkup(
+            div({
+                id: 'content',
+                dangerouslySetInnerHTML: {
+                    __html: divs
+                }
+            })
+        )
+
+        const slReponse = {
+            statusCode: 200,
+            headers: {
+                'Access-Control-Allow-Origin': '*', // Required for CORS support to work
+            },
+            body : html
+        };
+
+        callback(null, slReponse);
+    });
 }
 
 module.exports.hello = (event, context, callback) => {
