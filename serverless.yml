@@ -38,7 +38,7 @@ provider:
 
 resources:
   Resources:
-    TodosDynamoDbTable:
+    UsersDBTable:
       Type: 'AWS::DynamoDB::Table'
       DeletionPolicy: Retain
       Properties:
@@ -54,39 +54,22 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         TableName: users
-
-# you can overwrite defaults here
-#  stage: dev
-#  region: us-east-1
-
-# you can add statements to the Lambda function's IAM Role here
-#  iamRoleStatements:
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:ListBucket"
-#      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:PutObject"
-#      Resource:
-#        Fn::Join:
-#          - ""
-#          - - "arn:aws:s3:::"
-#            - "Ref" : "ServerlessDeploymentBucket"
-#            - "/*"
-
-# you can define service wide environment variables here
-#  environment:
-#    variable1: value1
-
-# you can add packaging information here
-#package:
-#  include:
-#    - include-me.js
-#    - include-me-dir/**
-#  exclude:
-#    - exclude-me.js
-#    - exclude-me-dir/**
+    RestaurantsDBTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: restaurants
 
 functions:
   hello:
@@ -95,6 +78,7 @@ functions:
       - http:
           path: hello
           method: get
+          cors: true
 
   availability:
     handler: handler.availability
@@ -102,6 +86,7 @@ functions:
       - http:
           path: availability
           method: get
+          cors: true
 
   listings:
       handler: handler.listings
@@ -109,6 +94,7 @@ functions:
         - http:
             path: listings
             method: get
+            cors: true
 
   nameListings:
       handler: handler.listingsByName
@@ -116,6 +102,7 @@ functions:
         - http:
             path: listingsByName
             method: get
+            cors: true
 
   getUsers:
       handler: handler.getUsers
@@ -123,6 +110,23 @@ functions:
         - http:
             path: getUsers
             method: get
+            cors: true
+
+  createUser:
+      handler: handler.createUser
+      events:
+        - http:
+            path: createUser
+            method: post
+            cors: true
+
+  getUserPromotions:
+      handler: handler.getUserPromotions
+      events:
+        - http:
+            path: getUserPromotions/{user_id}
+            method: get
+            cors: true
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events

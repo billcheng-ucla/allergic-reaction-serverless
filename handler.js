@@ -5,6 +5,7 @@ const openTableHost        = process.env.OPEN_TABLE_HOST;
 const AWS     = require('aws-sdk');
 const dynamo  = new AWS.DynamoDB.DocumentClient();
 const request = require('request');
+const uuid    = require('uuid');
 
 module.exports.hello = (event, context, callback) => {
     const response = {
@@ -177,10 +178,106 @@ module.exports.getUsers = (event, context, callback) => {
   });
 };
 
-// module.exports.createUser = (event, context, callback) => {
-//     const userData = JSON.parse(event.body);
-//     const params = {
 
+// module.exports.saveUserFavorite = (event, context, callback) => {
+//     let userData = event.errorType ? null : JSON.parse(event.body);
+
+//     if (!userData) {
+//         callback(new Error('Improper body'));
+//         return;
 //     }
 
+//     const params = {
+//         // something
+//         TableName: 'users',
+//         Key: {
+//             id: userData.user_id
+//         },
+//         Item: {
+//             id: uuid.v1(),
+//             user_id: userData.user_id,
+//             r_id: userData.r_id
+//         }
+//     };
+
+//     dynamo.put(params, (err, result) => {
+//         if (err) {
+//             callback(new Error(err));
+//             return;
+//         }
+//         const response = {
+//           statusCode: 200,
+//           body: JSON.stringify(result.Attributes),
+//         };
+
+//         callback(null, response);
+//     });
 // };
+
+// module.exports.saveUserFavorites = (event, context, callback) => {
+
+// };
+
+module.exports.getUserPromotions = (event, context, callback) => {
+    let userData = event.errorType ? null : JSON.parse(event.body);
+
+    if (!userData) {
+        callback(new Error('Improper body'));
+        return;
+    }
+
+    const params = {
+        TableName: 'users',
+        Key: {
+          user_id: event.pathParameters.user_id
+        }
+    };
+
+    dynamo.get(params, (err, data) => {
+        if (err) {
+            callback(new Error(err));
+            return;
+        }
+
+        const response = {
+            statusCode: 200,
+            body: JSON.stringify(data.Item)
+        };
+
+        callback(null, response);
+    });
+};
+
+// module.exports.removeUserFavorite = (event, context, callback) => {
+
+// };
+
+module.exports.createUser = (event, context, callback) => {
+    let userData = event.errorType ? null : JSON.parse(event.body);
+
+    if (!userData) {
+        callback(new Error('Improper body'));
+        return;
+    }
+
+    const params = {
+        TableName: 'users',
+        Item: {
+            id: uuid.v1(),
+            email: userData.email,
+            restaurants: []
+        }
+    };
+
+    dynamo.put(params, (err, data) => {
+        if (err) return callback(err);
+        const response = {
+            statusCode: 200,
+            body: JSON.stringify({
+                item: params.Item
+            })
+        };
+
+        return callback(null, response);
+    });
+};
