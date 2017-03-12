@@ -90,7 +90,7 @@ resources:
 
 functions:
   hello:
-    handler: handler.hello
+    handler: handler.testServerRender
     events:
       - http:
           path: hello
