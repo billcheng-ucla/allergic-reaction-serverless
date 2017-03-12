@@ -25,6 +25,10 @@ provider:
     OPEN_TABLE_ACCESS_TOKEN: 27037c67-f394-4cfd-ab51-069ac71132fb
     OPEN_TABLE_HOST: platform.otqa.com
     DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
+    GOOGLE_PLACE_API_KEY: AIzaSyDV9_lAg47ZYsABcpggl4NIIlRqLQYjS8M
+    GOOGLE_PLACE_HOST: https://maps.googleapis.com/maps/api/place
+    LONDON_LATITUDE: 51.5074
+    LONDON_LONGITUDE: -0.1278
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -89,11 +93,11 @@ resources:
 #    - exclude-me-dir/**
 
 functions:
-  hello:
-    handler: handler.testServerRender
+  placesearch:
+    handler: googleplaceapis.autocompleteSearch
     events:
       - http:
-          path: hello
+          path: search
           method: get
 
   availability:

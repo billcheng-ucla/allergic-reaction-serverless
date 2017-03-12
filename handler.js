@@ -45,31 +45,6 @@ module.exports.testServerRender = (event, context, callback) => {
     callback(null, slReponse);
 }
 
-// module.exports.testServerRender2 = (event, context, callback) => {
-//
-//   var props = {
-//       items: [
-//           'Item 0',
-//           'Item 1',
-//           'Item </scRIpt>\u2028',
-//           'Item <!--inject!-->\u2029',
-//       ]
-//   }
-//
-//   var html = ReactDOMServer.renderToStaticMarkup(<List items={props}/>)
-//
-//   const slReponse = {
-//       statusCode: 200,
-//       headers: {
-//           'Access-Control-Allow-Origin': '*', // Required for CORS support to work
-//       },
-//       body : html
-//   };
-//
-//   callback(null, slReponse);
-//
-// }
-
 module.exports.hello = (event, context, callback) => {
     const response = {
         statusCode: 200,
