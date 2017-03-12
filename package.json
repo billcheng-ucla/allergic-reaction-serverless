@@ -1,0 +1,19 @@
+{
+  "name": "allergic-reaction-serverless",
+  "version": "0.0.1",
+  "description": "Reactothon - Allergic Reaction",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/billcheng-ucla/allergic-reaction-serverless.git"
+  },
+  "author": "bill cheng, kevin ferron, chris messer, jamison hyman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/billcheng-ucla/allergic-reaction-serverless/issues"
+  },
+  "homepage": "https://github.com/billcheng-ucla/allergic-reaction-serverless#readme"
+}

@@ -21,6 +21,9 @@ provider:
   name: aws
   runtime: nodejs4.3
   profile: reactathon
+  environment:
+    OPEN_TABLE_ACCESS_TOKEN: 27037c67-f394-4cfd-ab51-069ac71132fb
+    OPEN_TABLE_HOST: platform.otqa.com
 
   environment:
     DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
@@ -90,14 +93,39 @@ resources:
 functions:
   hello:
     handler: handler.hello
+    events:
+      - http:
+          path: hello
+          method: get
+
+  availability:
+    handler: handler.availability
+    events:
+      - http:
+          path: availability
+          method: get
+
+  listings:
+      handler: handler.listings
+      events:
+        - http:
+            path: listings
+            method: get
+
+  nameListings:
+      handler: handler.listingsByName
+      events:
+        - http:
+            path: listingsByName
+            method: get
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
-#    events:
-#      - http:
-#          path: users/create
-#          method: get
+  #  events:
+  #    - http:
+  #        path: foodie/hello
+  #        method: get
 #      - s3: ${env:BUCKET}
 #      - schedule: rate(10 minutes)
 #      - sns: greeter-topic
