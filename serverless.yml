@@ -148,6 +148,14 @@ functions:
             method: post
             cors: true
 
+  getRestaurants:
+      handler: handler.getRestaurants
+      events:
+        - http:
+            path: getRestaurants
+            method: get
+            cors: true
+
   getUserPromotions:
       handler: handler.getUserPromotions
       events:
