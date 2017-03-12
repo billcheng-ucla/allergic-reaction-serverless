@@ -1,5 +1,7 @@
 var React = require('react'),
-    DOM = React.DOM, div = DOM.div, button = DOM.button, ul = DOM.ul, li = DOM.li, hr = DOM.hr
+    DOM = React.DOM,
+    div = DOM.div, button = DOM.button, ul = DOM.ul, li = DOM.li, hr = DOM.hr
+    img = DOM.img
 
 // This is just a simple example of a component that can be rendered on both
 // the server and browser
@@ -32,7 +34,10 @@ module.exports = React.createClass({
   // Note that we allow the button to be disabled initially, and then enable it
   // when everything has loaded
   render: function() {
-    return div(null, this.props.rid + " " + this.props.name);
+    return div(null,
+      img({src:'https://resizer.otstatic.com/v2/photos/small/'+this.props.rid +'.jpg'})
+
+    );
 
   },
 })
