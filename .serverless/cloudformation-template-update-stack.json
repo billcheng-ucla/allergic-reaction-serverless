@@ -11,6 +11,24 @@
         "LogGroupName": "/aws/lambda/allergic-reaction-dev-hello"
       }
     },
+    "AvailabilityLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/allergic-reaction-dev-availability"
+      }
+    },
+    "ListingsLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/allergic-reaction-dev-listings"
+      }
+    },
+    "NameListingsLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/allergic-reaction-dev-nameListings"
+      }
+    },
     "IamRoleLambdaExecution": {
       "Type": "AWS::IAM::Role",
       "Properties": {
@@ -56,6 +74,24 @@
                         "HelloLogGroup",
                         "Arn"
                       ]
+                    },
+                    {
+                      "Fn::GetAtt": [
+                        "AvailabilityLogGroup",
+                        "Arn"
+                      ]
+                    },
+                    {
+                      "Fn::GetAtt": [
+                        "ListingsLogGroup",
+                        "Arn"
+                      ]
+                    },
+                    {
+                      "Fn::GetAtt": [
+                        "NameListingsLogGroup",
+                        "Arn"
+                      ]
                     }
                   ]
                 },
@@ -72,6 +108,48 @@
                           {
                             "Fn::GetAtt": [
                               "HelloLogGroup",
+                              "Arn"
+                            ]
+                          },
+                          "*"
+                        ]
+                      ]
+                    },
+                    {
+                      "Fn::Join": [
+                        ":",
+                        [
+                          {
+                            "Fn::GetAtt": [
+                              "AvailabilityLogGroup",
+                              "Arn"
+                            ]
+                          },
+                          "*"
+                        ]
+                      ]
+                    },
+                    {
+                      "Fn::Join": [
+                        ":",
+                        [
+                          {
+                            "Fn::GetAtt": [
+                              "ListingsLogGroup",
+                              "Arn"
+                            ]
+                          },
+                          "*"
+                        ]
+                      ]
+                    },
+                    {
+                      "Fn::Join": [
+                        ":",
+                        [
+                          {
+                            "Fn::GetAtt": [
+                              "NameListingsLogGroup",
                               "Arn"
                             ]
                           },
@@ -106,7 +184,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/allergic-reaction/dev/1489265858541-2017-03-11T20:57:38.541Z/allergic-reaction.zip"
+          "S3Key": "serverless/allergic-reaction/dev/1489279284582-2017-03-12T00:41:24.582Z/allergic-reaction.zip"
         },
         "FunctionName": "allergic-reaction-dev-hello",
         "Handler": "handler.hello",
@@ -118,20 +196,149 @@
           ]
         },
         "Runtime": "nodejs4.3",
-        "Timeout": 6
+        "Timeout": 6,
+        "Environment": {
+          "Variables": {
+            "OPEN_TABLE_ACCESS_TOKEN": "27037c67-f394-4cfd-ab51-069ac71132fb",
+            "OPEN_TABLE_HOST": "platform.otqa.com"
+          }
+        }
       },
       "DependsOn": [
         "IamRoleLambdaExecution"
       ]
     },
-    "HelloLambdaVersion2b1i1fT11l43KlD4Op9OzChIolNJpwIe13stpM04do": {
+    "HelloLambdaVersiontp2jNV02ADjWEFnOSewEo2aAZemT76BA2A8mDuX2cI": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "HelloLambdaFunction"
         },
-        "CodeSha256": "2b/1i1fT11l43KlD4Op9OzChIolNJpwIe13stpM04do="
+        "CodeSha256": "tp2jNV02ADjWEFnO/SewEo2aAZemT76BA2A8mDuX2cI="
+      }
+    },
+    "AvailabilityLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/allergic-reaction/dev/1489279284582-2017-03-12T00:41:24.582Z/allergic-reaction.zip"
+        },
+        "FunctionName": "allergic-reaction-dev-availability",
+        "Handler": "handler.availability",
+        "MemorySize": 1024,
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs4.3",
+        "Timeout": 6,
+        "Environment": {
+          "Variables": {
+            "OPEN_TABLE_ACCESS_TOKEN": "27037c67-f394-4cfd-ab51-069ac71132fb",
+            "OPEN_TABLE_HOST": "platform.otqa.com"
+          }
+        }
+      },
+      "DependsOn": [
+        "IamRoleLambdaExecution"
+      ]
+    },
+    "AvailabilityLambdaVersiontp2jNV02ADjWEFnOSewEo2aAZemT76BA2A8mDuX2cI": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "AvailabilityLambdaFunction"
+        },
+        "CodeSha256": "tp2jNV02ADjWEFnO/SewEo2aAZemT76BA2A8mDuX2cI="
+      }
+    },
+    "ListingsLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/allergic-reaction/dev/1489279284582-2017-03-12T00:41:24.582Z/allergic-reaction.zip"
+        },
+        "FunctionName": "allergic-reaction-dev-listings",
+        "Handler": "handler.listings",
+        "MemorySize": 1024,
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs4.3",
+        "Timeout": 6,
+        "Environment": {
+          "Variables": {
+            "OPEN_TABLE_ACCESS_TOKEN": "27037c67-f394-4cfd-ab51-069ac71132fb",
+            "OPEN_TABLE_HOST": "platform.otqa.com"
+          }
+        }
+      },
+      "DependsOn": [
+        "IamRoleLambdaExecution"
+      ]
+    },
+    "ListingsLambdaVersiontp2jNV02ADjWEFnOSewEo2aAZemT76BA2A8mDuX2cI": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "ListingsLambdaFunction"
+        },
+        "CodeSha256": "tp2jNV02ADjWEFnO/SewEo2aAZemT76BA2A8mDuX2cI="
+      }
+    },
+    "NameListingsLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/allergic-reaction/dev/1489279284582-2017-03-12T00:41:24.582Z/allergic-reaction.zip"
+        },
+        "FunctionName": "allergic-reaction-dev-nameListings",
+        "Handler": "handler.listingsByName",
+        "MemorySize": 1024,
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs4.3",
+        "Timeout": 6,
+        "Environment": {
+          "Variables": {
+            "OPEN_TABLE_ACCESS_TOKEN": "27037c67-f394-4cfd-ab51-069ac71132fb",
+            "OPEN_TABLE_HOST": "platform.otqa.com"
+          }
+        }
+      },
+      "DependsOn": [
+        "IamRoleLambdaExecution"
+      ]
+    },
+    "NameListingsLambdaVersiontp2jNV02ADjWEFnOSewEo2aAZemT76BA2A8mDuX2cI": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "NameListingsLambdaFunction"
+        },
+        "CodeSha256": "tp2jNV02ADjWEFnO/SewEo2aAZemT76BA2A8mDuX2cI="
       }
     },
     "ApiGatewayRestApi": {
@@ -150,6 +357,51 @@
           ]
         },
         "PathPart": "hello",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayResourceAvailability": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "ApiGatewayRestApi",
+            "RootResourceId"
+          ]
+        },
+        "PathPart": "availability",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayResourceListings": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "ApiGatewayRestApi",
+            "RootResourceId"
+          ]
+        },
+        "PathPart": "listings",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayResourceListingsbyname": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "ApiGatewayRestApi",
+            "RootResourceId"
+          ]
+        },
+        "PathPart": "listingsByName",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
@@ -193,7 +445,121 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1489265858555": {
+    "ApiGatewayMethodAvailabilityGet": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "GET",
+        "RequestParameters": {},
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceAvailability"
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        },
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:aws:apigateway:",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "AvailabilityLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        },
+        "MethodResponses": []
+      }
+    },
+    "ApiGatewayMethodListingsGet": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "GET",
+        "RequestParameters": {},
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceListings"
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        },
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:aws:apigateway:",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "ListingsLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        },
+        "MethodResponses": []
+      }
+    },
+    "ApiGatewayMethodListingsbynameGet": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "GET",
+        "RequestParameters": {},
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceListingsbyname"
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        },
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:aws:apigateway:",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "NameListingsLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        },
+        "MethodResponses": []
+      }
+    },
+    "ApiGatewayDeployment1489279284628": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -202,7 +568,10 @@
         "StageName": "dev"
       },
       "DependsOn": [
-        "ApiGatewayMethodHelloGet"
+        "ApiGatewayMethodHelloGet",
+        "ApiGatewayMethodAvailabilityGet",
+        "ApiGatewayMethodListingsGet",
+        "ApiGatewayMethodListingsbynameGet"
       ]
     },
     "HelloLambdaPermissionApiGateway": {
@@ -211,6 +580,105 @@
         "FunctionName": {
           "Fn::GetAtt": [
             "HelloLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:aws:execute-api:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":",
+              {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "/*/*"
+            ]
+          ]
+        }
+      }
+    },
+    "AvailabilityLambdaPermissionApiGateway": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "AvailabilityLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:aws:execute-api:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":",
+              {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "/*/*"
+            ]
+          ]
+        }
+      }
+    },
+    "ListingsLambdaPermissionApiGateway": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "ListingsLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:aws:execute-api:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":",
+              {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "/*/*"
+            ]
+          ]
+        }
+      }
+    },
+    "NameListingsLambdaPermissionApiGateway": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "NameListingsLambdaFunction",
             "Arn"
           ]
         },
@@ -248,7 +716,25 @@
     "HelloLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "HelloLambdaVersion2b1i1fT11l43KlD4Op9OzChIolNJpwIe13stpM04do"
+        "Ref": "HelloLambdaVersiontp2jNV02ADjWEFnOSewEo2aAZemT76BA2A8mDuX2cI"
+      }
+    },
+    "AvailabilityLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "AvailabilityLambdaVersiontp2jNV02ADjWEFnOSewEo2aAZemT76BA2A8mDuX2cI"
+      }
+    },
+    "ListingsLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "ListingsLambdaVersiontp2jNV02ADjWEFnOSewEo2aAZemT76BA2A8mDuX2cI"
+      }
+    },
+    "NameListingsLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "NameListingsLambdaVersiontp2jNV02ADjWEFnOSewEo2aAZemT76BA2A8mDuX2cI"
       }
     },
     "ServiceEndpoint": {
