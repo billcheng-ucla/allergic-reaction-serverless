@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/billcheng-ucla/allergic-reaction-serverless/issues"
   },
-  "homepage": "https://github.com/billcheng-ucla/allergic-reaction-serverless#readme"
+  "homepage": "https://github.com/billcheng-ucla/allergic-reaction-serverless#readme",
+  "dependencies": {
+    "request": "^2.81.0"
+  }
 }
