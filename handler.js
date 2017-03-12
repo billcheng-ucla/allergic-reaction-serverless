@@ -1,6 +1,9 @@
 'use strict';
 const openTableAccessToken = process.env.OPEN_TABLE_ACCESS_TOKEN;
-const openTableHost = process.env.OPEN_TABLE_HOST;
+const openTableHost        = process.env.OPEN_TABLE_HOST;
+
+const AWS     = require('aws-sdk');
+const dynamo  = new AWS.DynamoDB.DocumentClient();
 const request = require('request');
 
 module.exports.hello = (event, context, callback) => {
@@ -154,3 +157,30 @@ module.exports.listings = (event, context, callback) => {
     });
 
 };
+
+
+module.exports.getUsers = (event, context, callback) => {
+    const params = {
+        TableName: 'users'
+    };
+  dynamo.scan(params, (err, data) => {
+    if (err) return callback(err);
+
+    const response = {
+        statusCode: 200,
+        body: JSON.stringify({
+            items: data.Items
+        })
+    };
+
+    return callback(null, response);
+  });
+};
+
+// module.exports.createUser = (event, context, callback) => {
+//     const userData = JSON.parse(event.body);
+//     const params = {
+
+//     }
+
+// };

@@ -53,7 +53,7 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-        TableName: ${self:provider.environment.DYNAMODB_TABLE}
+        TableName: users
 
 # you can overwrite defaults here
 #  stage: dev
@@ -115,6 +115,13 @@ functions:
       events:
         - http:
             path: listingsByName
+            method: get
+
+  getUsers:
+      handler: handler.getUsers
+      events:
+        - http:
+            path: getUsers
             method: get
 
 #    The following are a few example events you can configure

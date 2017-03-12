@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/billcheng-ucla/allergic-reaction-serverless#readme",
   "dependencies": {
+    "aws-sdk": "^2.6.5",
     "request": "^2.81.0"
   }
 }
