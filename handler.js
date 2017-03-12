@@ -106,7 +106,7 @@ module.exports.listings = (event, context, callback) => {
 
     const postal_code = event.queryStringParameters.postal_code;
 
-    if (typeof postal_code === 'undefined')) {
+    if (typeof postal_code === 'undefined') {
       const slReponse = {
           statusCode: 500,
           headers: {
@@ -117,7 +117,7 @@ module.exports.listings = (event, context, callback) => {
           }),
       };
 
-      return callback(null, slReponse);;
+      return callback(null, slReponse);
 
     }
 
