@@ -106,7 +106,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/allergic-reaction/dev/1489264455285-2017-03-11T20:34:15.285Z/allergic-reaction.zip"
+          "S3Key": "serverless/allergic-reaction/dev/1489265116177-2017-03-11T20:45:16.177Z/allergic-reaction.zip"
         },
         "FunctionName": "allergic-reaction-dev-hello",
         "Handler": "handler.hello",
@@ -124,14 +124,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "HelloLambdaVersionDagqxavEzOLQWrCxyzyfukGVQ4YhVoymlxj8QHDsQ": {
+    "HelloLambdaVersionQwSWX7iXKdGZ1Iu2EuwXDZmD9NExQT7S9xtLln3qI": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "HelloLambdaFunction"
         },
-        "CodeSha256": "D/agqxavEzOLQWrCxyzyfukGVQ4YhVoymlxj/8QHDsQ="
+        "CodeSha256": "QwSW/X7iXKdGZ1Iu2Euw/XDZmD9NExQT7S9xtLln3qI="
       }
     }
   },
@@ -144,7 +144,7 @@
     "HelloLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "HelloLambdaVersionDagqxavEzOLQWrCxyzyfukGVQ4YhVoymlxj8QHDsQ"
+        "Ref": "HelloLambdaVersionQwSWX7iXKdGZ1Iu2EuwXDZmD9NExQT7S9xtLln3qI"
       }
     }
   }
