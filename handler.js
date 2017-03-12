@@ -294,7 +294,7 @@ module.exports.getUserPromotions = (event, context, callback) => {
 
 module.exports.createUser = (event, context, callback) => {
     console.log('event', event);
-    let userData = event.errorType ? null : JSON.parse(event.body);
+    let userData = event.errorType || !event.body ? null : JSON.parse(event.body);
 
     if (!userData) {
         callback(new Error('Improper body'));
