@@ -1,5 +1,5 @@
 var React = require('react'),
-    DOM = React.DOM, div = DOM.div, button = DOM.button, ul = DOM.ul, li = DOM.li
+    DOM = React.DOM, div = DOM.div, button = DOM.button, ul = DOM.ul, li = DOM.li, hr = DOM.hr
 
 // This is just a simple example of a component that can be rendered on both
 // the server and browser
@@ -33,8 +33,9 @@ module.exports = React.createClass({
   // when everything has loaded
   render: function() {
 
-    return (
-      <div className='well pcard' onClick={(e) => this.props.handleClick(e)} >
+    return div(null,
+
+      div({onClick: (e) => this.props.handleClick(e)}, class: 'well pcard')
       <div className='row'>
           <div className='col-xs-4'>
               <img src='https://media-cdn.tripadvisor.com/media/photo-s/05/49/6b/df/le-grill-restaurant-and.jpg'
@@ -48,7 +49,6 @@ module.exports = React.createClass({
           <h6 className='text-muted'> Promotion description </h6>
           <h6 className='text-muted'> Active until blah </h6>
           </div>
-      </div>
       </div>
   )
     //
