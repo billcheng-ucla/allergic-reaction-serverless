@@ -292,8 +292,38 @@ module.exports.getUserPromotions = (event, context, callback) => {
 
 // };
 
+module.exports.createRestaurant = (event, context, callback) => {
+    let userData = event.errorType || !event.body ? null : JSON.parse(event.body);
+
+    if (!userData) {
+        callback(new Error('Improper body'));
+        return;
+    }
+
+    const params = {
+        TableName: 'restaurants',
+        Item: {
+            id: uuid.v1(),
+            name: userData.name,
+            r_id: userData.r_id,
+            promotion: userData.promotion ? userData.promotion : ''
+        }
+    };
+
+    dynamo.put(params, (err, data) => {
+        if (err) return callback(err);
+        const response = {
+            statusCode: 200,
+            body: JSON.stringify({
+                item: params.Item
+            })
+        };
+
+        return callback(null, response);
+    });
+};
+
 module.exports.createUser = (event, context, callback) => {
-    console.log('event', event);
     let userData = event.errorType || !event.body ? null : JSON.parse(event.body);
 
     if (!userData) {
