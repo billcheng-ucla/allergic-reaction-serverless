@@ -3,6 +3,7 @@ var React = require('react'),
     div = DOM.div, button = DOM.button, ul = DOM.ul, li = DOM.li, hr = DOM.hr
     img = DOM.img
     h4 = DOM.h4
+    p = DOM.p
 
 // This is just a simple example of a component that can be rendered on both
 // the server and browser
@@ -42,7 +43,7 @@ module.exports = React.createClass({
       ),
 
       div({className: 'col-md-8'},
-        h4(null, {this.props.name}),
+        h4(null, this.props.name),
         hr(),
         p(null, 'here is some text')
       )
