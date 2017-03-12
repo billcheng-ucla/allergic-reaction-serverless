@@ -22,12 +22,10 @@ const Card = React.createFactory(require('./restaurantCard'))
 module.exports.testServerRender = (event, context, callback) => {
     var props = {
         items: [
-            'Item 0',
-            'Item 1',
-            'Item </scRIpt>\u2028',
-            'Item <!--inject!-->\u2029',
+            {rid: 44,  name: "thirsty"}
         ]
     }
+
     var html = ReactDOMServer.renderToStaticMarkup(
         div({
             id: 'content',
@@ -142,7 +140,7 @@ module.exports.listingsByName = (event, context, callback) => {
 
 module.exports.listings = (event, context, callback) => {
 
-      const listingEndPoint = "/sync/listings";
+    const listingEndPoint = "/sync/listings";
     const finalEndpoint = "https://" + openTableHost + listingEndPoint;
     const options = {
         url: finalEndpoint,
@@ -157,7 +155,7 @@ module.exports.listings = (event, context, callback) => {
         console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
         //  console.log('body:', body); // Print the HTML for the Google homepage.
 
-        console.log(body);
+        console.log(JSON.parse(body).items);
         body.items.forEach((item) => {
             const params = {
                 TableName: 'restaurants',
