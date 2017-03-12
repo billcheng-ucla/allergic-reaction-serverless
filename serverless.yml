@@ -93,6 +93,13 @@ resources:
 #    - exclude-me-dir/**
 
 functions:
+  promotionsForUser:
+    handler: handler.testServerRender
+    events:
+      - http:
+          path: promotionsForUser
+          method: get
+
   placesearch:
     handler: googleplaceapis.autocompleteSearch
     events:
