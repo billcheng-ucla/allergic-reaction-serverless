@@ -107,16 +107,16 @@ module.exports.listings = (event, context, callback) => {
     console.log(event.queryStringParameters);
 
 
-    const postal_code = event.queryStringParameters.postal_code;
+    const region = event.queryStringParameters.region;
 
-    if (typeof postal_code === 'undefined') {
+    if (typeof region === 'undefined') {
       const slReponse = {
           statusCode: 500,
           headers: {
               'Access-Control-Allow-Origin': '*', // Required for CORS support to work
           },
           body: JSON.stringify({
-              message: 'undefined parameter: postal_code'
+              message: 'undefined parameter: region'
           }),
       };
 
@@ -124,7 +124,7 @@ module.exports.listings = (event, context, callback) => {
 
     }
 
-    const listingEndPoint = "/sync/listings?postal_code="+ postal_code;
+    const listingEndPoint = "/sync/listings?region="+ region;
 
     const finalEndpoint = "https://" + openTableHost + listingEndPoint;
 
