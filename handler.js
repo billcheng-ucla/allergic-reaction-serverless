@@ -142,24 +142,7 @@ module.exports.listingsByName = (event, context, callback) => {
 
 module.exports.listings = (event, context, callback) => {
 
-    console.log(event.queryStringParameters);
-
-    const region = event.queryStringParameters.region;
-
-    if (typeof region === 'undefined') {
-        const slReponse = {
-            statusCode: 500,
-            headers: {
-                'Access-Control-Allow-Origin': '*', // Required for CORS support to work
-            },
-            body: JSON.stringify({
-                message: 'undefined parameter: region'
-            }),
-        };
-        return callback(null, slReponse);
-    }
-
-    const listingEndPoint = "/sync/listings?region=" + region;
+      const listingEndPoint = "/sync/listings";
     const finalEndpoint = "https://" + openTableHost + listingEndPoint;
     const options = {
         url: finalEndpoint,
@@ -173,18 +156,14 @@ module.exports.listings = (event, context, callback) => {
         console.log('error:', error); // Print the error if one occurred
         console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
         //  console.log('body:', body); // Print the HTML for the Google homepage.
-
-
+        console.log(body[0])
 
         const slReponse = {
             statusCode: 200,
             headers: {
                 'Access-Control-Allow-Origin': '*', // Required for CORS support to work
             },
-            body: JSON.stringify({
-                message: 'ot results!',
-                data: body // eslint-disable-line
-            }),
+            body: body
         };
 
         callback(null, slReponse);
