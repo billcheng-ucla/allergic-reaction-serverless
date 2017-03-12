@@ -156,7 +156,22 @@ module.exports.listings = (event, context, callback) => {
         console.log('error:', error); // Print the error if one occurred
         console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
         //  console.log('body:', body); // Print the HTML for the Google homepage.
-        console.log(body[0])
+
+        console.log(body);
+        body.items.forEach((item) => {
+            const params = {
+                TableName: 'restaurants',
+                Item: {
+                    id: uuid.v1(),
+                    name: item.name,
+                    rid: item.rid
+                }
+            };
+
+            dynamo.put(params, (err, data) => {
+
+            });
+        });
 
         const slReponse = {
             statusCode: 200,
