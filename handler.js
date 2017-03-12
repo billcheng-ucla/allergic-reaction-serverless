@@ -212,6 +212,24 @@ module.exports.getUsers = (event, context, callback) => {
     });
 };
 
+module.exports.getRestaurants = (event, context, callback) => {
+    const params = {
+        TableName: 'restaurants'
+    };
+    dynamo.scan(params, (err, data) => {
+        if (err) return callback(err);
+
+        const response = {
+            statusCode: 200,
+            body: JSON.stringify({
+                items: data.Items
+            })
+        };
+
+        return callback(null, response);
+    });
+};
+
 function safeStringify(obj) {
     return JSON.stringify(obj)
         .replace(/<\/(script)/ig, '<\\/$1')
