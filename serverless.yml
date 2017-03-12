@@ -24,8 +24,6 @@ provider:
   environment:
     OPEN_TABLE_ACCESS_TOKEN: 27037c67-f394-4cfd-ab51-069ac71132fb
     OPEN_TABLE_HOST: platform.otqa.com
-
-  environment:
     DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
   iamRoleStatements:
     - Effect: Allow
